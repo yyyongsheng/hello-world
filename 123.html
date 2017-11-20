@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			.main {
+				width: 922px;
+				margin: 100px auto;
+			}
+			
+			.imgbox li {
+				width: 100px;
+				height: 100px;
+				margin: 5px;
+				float: left;
+				position: relative;
+				overflow: hidden;
+				background: orangered;
+			}
+			
+			.slidiv {
+				height: 100px;
+				width:100px;
+				background: rgba(9, 9, 9, 0.5);
+				position: absolute;
+				left: -294px;
+				top: 0;
+				text-align: center;
+			}
+		
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="main">
+			<ul class="imgbox">
+				<li style="margin-left:0;"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript">
+	$(function() {
+		$(".imgbox li").each(function() {
+			$(this).append("<div class=slidiv>shade</div>");
+		});
+		$(".imgbox li").bind("mouseenter mouseleave", function(e) {
+			var w = $(this).width();
+			var h = $(this).height();
+			var x = (e.pageX - this.offsetLeft - (w / 2)) * (w > h ? (h / w) : 1);
+			var y = (e.pageY - this.offsetTop - (h / 2)) * (h > w ? (w / h) : 1);
+			var direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4;
+
+			this_slidiv = $(this).find('.slidiv');
+			if(e.type == 'mouseenter') {
+				switch(direction) {
+					case 0:
+						this_slidiv.css({
+							top: -h,
+							left: "0px"
+						});
+						break;
+					case 1:
+						this_slidiv.css({
+							top: "0px",
+							left: w
+						});
+						break;
+					case 2:
+						this_slidiv.css({
+							top: h,
+							left: "0px"
+						});
+						break;
+					case 3:
+						this_slidiv.css({
+							top: "0px",
+							left: -w
+						});
+						break;
+				}
+
+				this_slidiv.stop(true, true).animate({
+					"top": "0px",
+					"left": "0px"
+				}, "fast");
+
+			} else if(e.type == 'mouseleave') {
+				switch(direction) {
+					case 0:
+						this_slidiv.stop(true, true).animate({
+							"top": -h
+						}, "fast");
+						break;
+					case 1:
+						this_slidiv.stop(true, true).animate({
+							"left": w
+						}, "fast");
+						break;
+					case 2:
+						this_slidiv.stop(true, true).animate({
+							"top": h
+						}, "fast");
+						break;
+					case 3:
+						this_slidiv.stop(true, true).animate({
+							"left": -w
+						}, "fast");
+						break;
+				}
+			}
+
+		});
+
+	});
+</script>
